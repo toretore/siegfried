@@ -25,6 +25,7 @@ Siegfried = {
     with ($('update-frequency')) value = getAttribute('savedValue');
     if (!this.isUpdatable()) { this.showPreferences(); }
     this.reloadUpdates();
+    this.createReloader();
   },
   
   destruct: function(){
@@ -63,7 +64,7 @@ Siegfried = {
       };
       req.open('POST', this.updateURL, true);
       req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      req.send('status=test');
+      req.send('status='+$('update-message').value);
       this.updateStatusbar('Sending update..');
     }
   },
@@ -75,6 +76,17 @@ Siegfried = {
 
   updateStatusbar: function(v){
     $('status-message').value = v;
+  },
+  
+  createReloader: function(){
+    var minutes, that = this;
+    if (this._reloader) { clearInterval(this._reloader); }
+    if (minutes = $('update-frequency').value) {
+      this._reloader = setInterval(function(){
+        dump('reloader\n');
+        that.reloadUpdates();
+      }, minutes*60*1000);
+    }
   },
 
   quit: function(aForceQuit) {
