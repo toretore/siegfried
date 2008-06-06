@@ -1,0 +1,14 @@
+Siegfried is a Twitter client written with XUL. I think it requires
+Firefox 3 or whichever version of Gecko that corresponds with. I wrote
+it mostly to learn how XUL works, so it's a bit rough around the edges.
+
+How to get it running:
+
+If you have xulrunner:
+
+xulrunner application.ini
+
+A little bird told me (haha, because it's Twitter, get it?) you can
+use Firefox to run it too:
+
+firefox -app application.ini
