@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://siegfried/skin/" type="text/css"?>
+<!DOCTYPE window SYSTEM "chrome://siegfried/locale/">
+
+<window
+    id="siegfried-window"
+    title="Siegfried"
+    orient="vertical"
+    onload="Siegfried.init()"
+    onunload="Siegfried.destruct()"
+    width="400" height="500"
+    persist="width height"
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <script src="chrome://siegfried/content/siegfried.js"/>
+
+  <commandset>
+    <command id="cmd_siegfried_show_preferences" oncommand="Siegfried.showPreferences();"/>
+    <command id="cmd_siegfried_reload_updates" oncommand="Siegfried.reloadUpdates();"/>
+    <command id="cmd_siegfried_close" oncommand="window.close();"/>
+    <command id="cmd_siegfried_quit" oncommand="Siegfried.quit();"/>
+    <command id="cmd_siegfried_about" oncommand="alert('IM IN UR XUL LISTIN UR TWEETZ');"/>
+    <command id="cmd_siegfried_send_update" oncommand="Siegfried.postUpdate();"/>
+  </commandset>
+
+  <keyset>
+    <key id="close_cmd" key="W" modifiers="accel" command="cmd_siegfried_close"/>
+    <key id="quit_cmd" key="Q" modifiers="accel" command="cmd_siegfried_quit"/>
+    <key id="reload_cmd" key="R" modifiers="accel" command="cmd_siegfried_reload_updates"/>
+    <key id="reload_cmd_f5" keycode="VK_F5" command="cmd_siegfried_reload_updates"/>
+  </keyset>
+
+  <toolbox>
+    <menubar id="siegfried-menubar">
+      <menu id="file-menu" label="&menu.file.label;" accesskey="&menu.file.accesskey;">
+        <menupopup id="file-popup">
+          <menuitem label="&menu.file.close.label;" accesskey="&menu.file.close.accesskey;" key="close_cmd" command="cmd_siegfried_close"/>
+          <menuseparator/>
+          <menuitem label="&menu.file.quit.label;" accesskey="&menu.file.quit.accesskey;" key="quit_cmd" command="cmd_siegfried_quit"/>
+        </menupopup>
+      </menu>
+      <menu id="edit-menu" label="&menu.edit.label;" accesskey="&menu.edit.accesskey;">
+        <menupopup id="edit-popup">
+          <menuitem label="&menu.edit.preferences.label;" accesskey="&menu.edit.preferences.accesskey;" command="cmd_siegfried_show_preferences"/>
+        </menupopup>
+      </menu>
+      <menu id="view-menu" label="&menu.view.label;" accesskey="&menu.view.accesskey;">
+        <menupopup id="view-popup">
+          <menuitem label="&menu.view.reload.label;" accesskey="&menu.view.reload.accesskey;" key="reload_cmd" command="cmd_siegfried_reload_updates"/>
+        </menupopup>
+      </menu>
+      <menu id="help-menu" label="&menu.help.label;" accesskey="&menu.help.accesskey;">
+        <menupopup id="help-popup">
+          <menuitem label="&menu.help.about.label;" accesskey="&menu.help.about.accesskey;" command="cmd_siegfried_about"/>
+        </menupopup>
+      </menu>
+    </menubar>
+  </toolbox>
+
+
+  <tabbox id="siegfried-tabs" flex="1">
+    <hbox>
+      <tabs id="siegfried-tabs">
+        <tab id="private-updates-tab" label="&updates.privateTab.label;"/>
+        <tab id="public-updates-tab" label="&updates.publicTab.label;"/>
+        <tab id="preferences-tab" label="Preferences"/>
+      </tabs>
+      <spacer flex="1"/>
+      <toolbarbutton label="Reload" tooltiptext="&updates.reloadButton.tooltipText;" command="cmd_siegfried_reload_updates"/>
+    </hbox>
+    <tabpanels flex="1" id="siegfried-tabpanels">
+      <tabpanel id="private-updates-tabpanel">
+        <richlistbox datasources="rdf:null" querytype="xml" ref="*" class="updates" id="private-updates" flex="1" rows="5">
+          <template>
+            <query expr="status">
+              <assign var="?message" expr="text[text()]"/>
+              <assign var="?username" expr="user/screen_name[text()]"/>
+              <assign var="?name" expr="user/name[text()]"/>
+              <assign var="?time" expr="created_at[text()]"/>
+              <assign var="?id" expr="id[text()]"/>
+              <assign var="?image_url" expr="user/profile_image_url[text()]"/>
+            </query>
+            <action>
+              <richlistitem uri="?" class="update">
+                <vbox pack="center">
+                  <image src="?image_url"/>
+                </vbox>
+                <vbox flex="1">
+                  <hbox align="center">
+                    <label class="username" value="?username"/>
+                    <label class="time" value="?time"/>
+                  </hbox>
+                  <description class="message" flex="1"><textnode value="?message"/></description>
+                </vbox>
+              </richlistitem>
+            </action>
+          </template>
+        </richlistbox>
+      </tabpanel>
+      <tabpanel id="public-updates-tabpanel">
+        <richlistbox datasources="rdf:null" querytype="xml" ref="*" class="updates" id="public-updates" flex="1" rows="5">
+          <template>
+            <query expr="status">
+              <assign var="?message" expr="text[text()]"/>
+              <assign var="?username" expr="user/screen_name[text()]"/>
+              <assign var="?name" expr="user/name[text()]"/>
+              <assign var="?time" expr="created_at[text()]"/>
+              <assign var="?id" expr="id[text()]"/>
+              <assign var="?image_url" expr="user/profile_image_url[text()]"/>
+            </query>
+            <action>
+              <richlistitem uri="?" class="update">
+                <vbox pack="center">
+                  <image src="?image_url"/>
+                </vbox>
+                <vbox flex="1">
+                  <hbox align="center">
+                    <label class="username" value="?username"/>
+                    <label class="time" value="?time"/>
+                  </hbox>
+                  <description class="message" flex="1"><textnode value="?message"/></description>
+                </vbox>
+              </richlistitem>
+            </action>
+          </template>
+        </richlistbox>
+      </tabpanel>
+      <tabpanel id="preferences-tabpanel">
+        <grid id="preferences" flex="1">
+          <columns>
+            <column flex="1"/>
+            <column flex="2"/>
+          </columns>
+          <rows>
+            <row align="center">
+              <label value="&preferences.username.label;" control="twitter-username"/>
+              <textbox id="twitter-username" persist="savedValue"/>
+            </row>
+            <row align="center">
+              <label value="&preferences.password.label;" control="twitter-password"/>
+              <textbox id="twitter-password" type="password" persist="savedValue"/>
+            </row>
+            <row align="center">
+              <label value="&preferences.updateFrequency.label;"/>
+              <hbox align="center">
+                <textbox type="number" id="update-frequency" value="5" persist="savedValue"/>
+                <label value="&preferences.updateFrequency.minutes;"/>
+              </hbox>
+            </row>
+          </rows>
+        </grid>
+      </tabpanel>
+    </tabpanels>
+  </tabbox>
+
+
+  <splitter collapse="after"/>
+
+  <hbox>
+    <textbox flex="1" id="update-message" multiline="true" value="&update.message.defaultValue;"/>
+    <button label="&update.button.label;" id="update-button" command="cmd_siegfried_send_update"/>
+  </hbox>
+
+  <statusbar id="statusbar">
+    <statusbarpanel id="statusbarpanel" flex="1" pack="start">
+      <label id="status-message" value=""/>
+    </statusbarpanel>
+  </statusbar>
+
+</window>

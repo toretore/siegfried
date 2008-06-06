@@ -1,0 +1,51 @@
+@import url(chrome://global/skin/);
+
+#siegfried-tabs, #siegfried-tabs tabpanels, #siegfried-tabs tabpanel {
+  padding: 0;
+  margin: 0;
+}
+
+#siegfried-tabs {
+  margin-top: 0.25em;
+}
+
+#siegfried-tabs .updates {
+  background: #fff;
+  border-bottom: 1px inset;
+  font-size: 80%;
+}
+
+  #siegfried-tabs .updates .update {
+    padding: 0.5em 0.25em;
+    border-bottom: 1px dotted #eee;
+  }
+
+    #siegfried-tabs .updates .update image {
+      height: 50px;
+      width: 50px;
+    }
+
+    #siegfried-tabs .updates .update .username {
+      font-size: 120%;
+      font-weight: bold;
+    }
+
+    #siegfried-tabs .updates .update .time {
+      font-size: 80%;
+      color: #999;
+    }
+
+    #siegfried-tabs .updates .update .message {
+    }
+
+#update-message {
+  height: 1em;
+}
+
+#statusbar {
+
+}
+
+  #statusbar spacer {
+    width: 10px;
+  }

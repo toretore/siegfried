@@ -1,0 +1,34 @@
+<!ENTITY menu.file.label "File">
+<!ENTITY menu.file.accesskey "f">
+<!ENTITY menu.file.close.label "Close">
+<!ENTITY menu.file.close.accesskey "c">
+<!ENTITY menu.file.quit.label "Quit">
+<!ENTITY menu.file.quit.accesskey "q">
+
+<!ENTITY menu.edit.label "Edit">
+<!ENTITY menu.edit.accesskey "e">
+<!ENTITY menu.edit.preferences.label "Preferences">
+<!ENTITY menu.edit.preferences.accesskey "p">
+
+<!ENTITY menu.view.label "View">
+<!ENTITY menu.view.accesskey "v">
+<!ENTITY menu.view.reload.label "Reload">
+<!ENTITY menu.view.reload.accesskey "r">
+
+<!ENTITY menu.help.label "Help">
+<!ENTITY menu.help.accesskey "h">
+<!ENTITY menu.help.about.label "About">
+<!ENTITY menu.help.about.accesskey "a">
+
+<!ENTITY update.message.defaultValue "Whats up?">
+<!ENTITY update.button.label "Say it">
+
+<!ENTITY preferences.username.label "Username:">
+<!ENTITY preferences.password.label "Password:">
+<!ENTITY preferences.updateFrequency.label "Update every:">
+<!ENTITY preferences.updateFrequency.minutes "minutes">
+<!ENTITY preferences.closeButton.label "Close">
+
+<!ENTITY updates.privateTab.label "Friends">
+<!ENTITY updates.publicTab.label "Everyone">
+<!ENTITY updates.reloadButton.tooltipText "Reload updates">
