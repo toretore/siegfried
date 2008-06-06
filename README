@@ -1,6 +1,6 @@
 Siegfried is a Twitter client written with XUL. I think it requires
 Firefox 3 or whichever version of Gecko that corresponds with. I wrote
-it mostly to learn how XUL works, so it's a bit rough around the edges.
+it mostly to learn how XUL works, so it's very rough around the edges.
 
 How to get it running:
 
