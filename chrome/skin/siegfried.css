@@ -20,6 +20,11 @@
     border-bottom: 1px dotted #eee;
   }
 
+    #siegfried-tabs .updates .update .updating {/* heh */
+      padding: 1em;
+      text-align: center;
+    }
+
     #siegfried-tabs .updates .update image {
       height: 50px;
       width: 50px;
@@ -49,3 +54,7 @@
   #statusbar spacer {
     width: 10px;
   }
+
+debugger {
+  -moz-binding: url("chrome://siegfried/content/debug.xbl#debugger");
+}

@@ -73,60 +73,10 @@
     </hbox>
     <tabpanels flex="1" id="siegfried-tabpanels">
       <tabpanel id="private-updates-tabpanel">
-        <richlistbox datasources="rdf:null" querytype="xml" ref="*" class="updates" id="private-updates" flex="1" rows="5">
-          <template>
-            <query expr="status">
-              <assign var="?message" expr="text[text()]"/>
-              <assign var="?username" expr="user/screen_name[text()]"/>
-              <assign var="?name" expr="user/name[text()]"/>
-              <assign var="?time" expr="created_at[text()]"/>
-              <assign var="?id" expr="id[text()]"/>
-              <assign var="?image_url" expr="user/profile_image_url[text()]"/>
-            </query>
-            <action>
-              <richlistitem uri="?" class="update">
-                <vbox pack="center">
-                  <image src="?image_url"/>
-                </vbox>
-                <vbox flex="1">
-                  <hbox align="center">
-                    <label class="username" value="?username"/>
-                    <label class="time" value="?time"/>
-                  </hbox>
-                  <description class="message" flex="1"><textnode value="?message"/></description>
-                </vbox>
-              </richlistitem>
-            </action>
-          </template>
-        </richlistbox>
+        <richlistbox class="updates" id="private-updates" flex="1" rows="5"/>
       </tabpanel>
       <tabpanel id="public-updates-tabpanel">
-        <richlistbox datasources="rdf:null" querytype="xml" ref="*" class="updates" id="public-updates" flex="1" rows="5">
-          <template>
-            <query expr="status">
-              <assign var="?message" expr="text[text()]"/>
-              <assign var="?username" expr="user/screen_name[text()]"/>
-              <assign var="?name" expr="user/name[text()]"/>
-              <assign var="?time" expr="created_at[text()]"/>
-              <assign var="?id" expr="id[text()]"/>
-              <assign var="?image_url" expr="user/profile_image_url[text()]"/>
-            </query>
-            <action>
-              <richlistitem uri="?" class="update">
-                <vbox pack="center">
-                  <image src="?image_url"/>
-                </vbox>
-                <vbox flex="1">
-                  <hbox align="center">
-                    <label class="username" value="?username"/>
-                    <label class="time" value="?time"/>
-                  </hbox>
-                  <description class="message" flex="1"><textnode value="?message"/></description>
-                </vbox>
-              </richlistitem>
-            </action>
-          </template>
-        </richlistbox>
+        <richlistbox class="updates" id="public-updates" flex="1" rows="5"/>
       </tabpanel>
       <tabpanel id="preferences-tabpanel">
         <grid id="preferences" flex="1">
