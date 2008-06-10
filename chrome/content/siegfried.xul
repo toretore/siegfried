@@ -13,6 +13,7 @@
     xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
   <script src="chrome://siegfried/content/siegfried.js"/>
+  <script src="chrome://venkman/content/venkman-overlay.js"/>
 
   <commandset>
     <command id="cmd_siegfried_show_preferences" oncommand="Siegfried.showPreferences();"/>
@@ -21,6 +22,7 @@
     <command id="cmd_siegfried_quit" oncommand="Siegfried.quit();"/>
     <command id="cmd_siegfried_about" oncommand="alert('IM IN UR XUL LISTIN UR TWEETZ');"/>
     <command id="cmd_siegfried_send_update" oncommand="Siegfried.postUpdate();"/>
+    <command id="cmd_siegfried_start_venkman" oncommand="start_venkman();"/>
   </commandset>
 
   <keyset>
@@ -52,6 +54,7 @@
       <menu id="help-menu" label="&menu.help.label;" accesskey="&menu.help.accesskey;">
         <menupopup id="help-popup">
           <menuitem label="&menu.help.about.label;" accesskey="&menu.help.about.accesskey;" command="cmd_siegfried_about"/>
+          <menuitem label="Venkman" command="cmd_siegfried_start_venkman"/>
         </menupopup>
       </menu>
     </menubar>

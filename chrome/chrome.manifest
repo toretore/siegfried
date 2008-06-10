@@ -1,3 +1,6 @@
 content siegfried file:content/
 skin siegfried classic/1.0 file:skin/
 locale siegfried en-US file:locale/
+content venkman jar:venkman.jar!/content/venkman/
+locale venkman en-US jar:venkman.jar!/locale/en-US/venkman/
+skin venkman modern/1.0 jar:venkman.jar!/skin/modern/venkman/
