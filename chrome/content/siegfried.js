@@ -1,19 +1,36 @@
 window['$'] = function(){ return document.getElementById.apply(document, arguments); };
 window['$A'] = function(){ var a=[]; for (var i=0; i<arguments.length; i++) { a.push(arguments[i]); } return a; };
 
-window['$E'] = function(){
-  var tagName = arguments[0],
-      attributes = arguments[1] || {},
-      children = Array.filter(arguments, function(a,i){ return i > 1; });
+window['$E'] = (function(){
 
-  var el = document.createElement(tagName);
-  for each (var [k,v] in Iterator(attributes)) { el.setAttribute(k, v); }
-  children.forEach(function(child){
-    el.appendChild(typeof child == 'string' ? document.createTextNode(child) : child);
-  });
+  var namespaces = {
+    xul: 'http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul',
+    html: 'http://www.w3.org/1999/xhtml'
+  };
 
-  return el;
-};
+  return function(){
+    var tagName = arguments[0],
+        attributes = arguments[1] || {},
+        children = Array.filter(arguments, function(a,i){ return i > 1; });
+
+    var m = tagName.match(/([^:]+):(.*)/);
+    var ns = m && namespaces[m[1]],
+        el;
+
+    if (ns) {
+      el = document.createElementNS(namespaces[m[1]], tagName);
+    } else {
+      el = document.createElement(tagName);
+    }
+
+    for each (var [k,v] in Iterator(attributes)) { el.setAttribute(k, v); }
+    children.forEach(function(child){
+      el.appendChild(typeof child == 'string' ? document.createTextNode(child) : child);
+    });
+
+    return el;
+  };
+})();
 
 Siegfried = {
 
@@ -31,12 +48,17 @@ Siegfried = {
   },
   publicTimelineURL: 'http://twitter.com/statuses/public_timeline.json',
   get updateURL() {
+    if (!this.username || !this.password) { return null; }
     return 'http://'+this.username+':'+this.password+
            '@twitter.com/statuses/update.xml';
   },
   
   get privateUpdatesList() { return $('private-updates'); },
   get publicUpdatesList() { return $('public-updates'); },
+  
+  get selectedTabName() {
+    return $('siegfried-tabpanels').selectedPanel.getAttribute('name');
+  },
 
   init: function(){
     with ($('twitter-username')) value = getAttribute('savedValue');
@@ -56,6 +78,17 @@ Siegfried = {
   reloadUpdates: function(){
     this.getPublicUpdates();
     this.getPrivateUpdates();
+  },
+  
+  reloadCurrent: function(){
+    switch (this.selectedTabName) {
+      case 'private':
+        this.getPrivateUpdates();
+        break;
+      case 'public':
+        this.getPublicUpdates();
+        break;
+    }
   },
   
   getUpdates: function(url, options){
@@ -106,7 +139,9 @@ Siegfried = {
   },
   
   buildUpdatesFromJSON: function(json){
+    var that = this;
     return json.map(function(update){
+      var time = new Date(update.created_at);
       return $E('richlistitem', {class:'update'},
         $E('vbox', {pack:'center'},
           $E('image', {src:update.user.profile_image_url})
@@ -114,28 +149,26 @@ Siegfried = {
         $E('vbox', {flex:'1'},
           $E('hbox', {align:'center'},
             $E('label', {class:'username', value:update.user.screen_name}),
-            $E('label', {class:'time', value:update.created_at})
+            $E('label', {class:'time', value:that.formatTime(time)})
           ),
-          $E('description', {class:'message', flex:'1'}, update.text)
+          $E.apply(window, ['description', {class:'message', flex:'1'}].concat(that.formatUpdateText(update.text)))
         )
       );
     });
   },
   
   postUpdate: function(){
-    if (this.isUpdatable()) {
+    if (this.updateURL) {
       var that = this;
 
       this.request({
-        url: 'http://www.example.com/',
+        url: this.updateURL,
         method: 'post',
         data: 'status='+$('update-message').value,
         onLoading: function(){
-          dump('LOADING\n');
           that.updateStatusbar('Sending update...');
         },
         onSuccess: function(){
-          dump('SUCCESS\n');
           that.updateStatusbar('');
           $('update-message').value = '';
           that.reloadUpdates();
@@ -229,6 +262,39 @@ Siegfried = {
 
     return req;
   },
+  
+  formatTime: function(time){
+    var now = new Date(),
+        str = '';
+    if (time.getYear() == now.getYear() && time.getMonth() == now.getMonth()) {
+      if (time.getDate() == now.getDate()) {
+        str += 'Today at ';
+      } else if (now.getDate() - time.getDate() == 1) {
+        str += 'Yesterday at ';
+      } else {
+        str += time.toLocaleFormat('%a %e %b at ');
+      }
+    } else {
+      str += time.toLocaleFormat('%a %e %b %Y at');
+    }
+
+    return str + time.toLocaleFormat('%H:%M');
+  },
+  
+  formatUpdateText: function(text){
+    return text.split(/(@[a-zA-Z1-9_-]+)/).reduce(function(els,s){
+      var m = s.match(/(@)([a-zA-Z1-9_-]+)/);
+      if (m){
+        els.push($E('html:a', {href:'#'}, m[1]+m[2]));
+      } else {
+        els = els.concat(s.split(/((?:http:\/\/|www\.)[^ ]+)/).map(function(s){
+          var m = s.match(/((?:http:\/\/|www\.)[^ ]+)/);
+          return m ? $E('html:a', {href:s}, s) : s;
+        }));
+      }
+      return els;
+    }, []);
+  },
 
   merge: function(target, source, keep){
     var o = {};
@@ -244,6 +310,53 @@ Siegfried = {
   K: function(){}
 
 };
+
+
+
+if (!Array.prototype.reduce)
+{
+  Array.prototype.reduce = function(fun /*, initial*/)
+  {
+    var len = this.length;
+    if (typeof fun != "function")
+      throw new TypeError();
+
+    // no value to return if no initial value and an empty array
+    if (len == 0 && arguments.length == 1)
+      throw new TypeError();
+
+    var i = 0;
+    if (arguments.length >= 2)
+    {
+      var rv = arguments[1];
+    }
+    else
+    {
+      do
+      {
+        if (i in this)
+        {
+          rv = this[i++];
+          break;
+        }
+
+        // if array contains no values, no initial value to return
+        if (++i >= len)
+          throw new TypeError();
+      }
+      while (true);
+    }
+
+    for (; i < len; i++)
+    {
+      if (i in this)
+        rv = fun.call(null, rv, this[i], i, this);
+    }
+
+    return rv;
+  };
+}
+
 
 
 

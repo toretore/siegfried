@@ -43,6 +43,15 @@
     #siegfried-tabs .updates .update .message {
     }
 
+      #siegfried-tabs .updates .update .message a {
+        color: #339;
+      }
+
+        #siegfried-tabs .updates .update .message a:hover,
+        #siegfried-tabs .updates .update .message a:focus {
+          text-decoration: underline;
+        }
+
 #update-message {
   height: 1em;
 }

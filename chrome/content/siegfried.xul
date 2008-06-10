@@ -18,6 +18,7 @@
   <commandset>
     <command id="cmd_siegfried_show_preferences" oncommand="Siegfried.showPreferences();"/>
     <command id="cmd_siegfried_reload_updates" oncommand="Siegfried.reloadUpdates();"/>
+    <command id="cmd_siegfried_reload_current" oncommand="Siegfried.reloadCurrent();"/>
     <command id="cmd_siegfried_close" oncommand="window.close();"/>
     <command id="cmd_siegfried_quit" oncommand="Siegfried.quit();"/>
     <command id="cmd_siegfried_about" oncommand="alert('IM IN UR XUL LISTIN UR TWEETZ');"/>
@@ -69,16 +70,16 @@
         <tab id="preferences-tab" label="Preferences"/>
       </tabs>
       <spacer flex="1"/>
-      <toolbarbutton label="Reload" tooltiptext="&updates.reloadButton.tooltipText;" command="cmd_siegfried_reload_updates"/>
+      <toolbarbutton label="Reload" tooltiptext="&updates.reloadButton.tooltipText;" command="cmd_siegfried_reload_current"/>
     </hbox>
     <tabpanels flex="1" id="siegfried-tabpanels">
-      <tabpanel id="private-updates-tabpanel">
+      <tabpanel id="private-updates-tabpanel" name="private">
         <richlistbox class="updates" id="private-updates" flex="1" rows="5"/>
       </tabpanel>
-      <tabpanel id="public-updates-tabpanel">
+      <tabpanel id="public-updates-tabpanel" name="public">
         <richlistbox class="updates" id="public-updates" flex="1" rows="5"/>
       </tabpanel>
-      <tabpanel id="preferences-tabpanel">
+      <tabpanel id="preferences-tabpanel" name="preferences">
         <grid id="preferences" flex="1">
           <columns>
             <column flex="1"/>
