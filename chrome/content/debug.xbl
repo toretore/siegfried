@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<bindings xmlns="http://www.mozilla.org/xbl"
+    xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <binding id="debugger">
+    <content>
+      <xul:vbox flex="1">
+        <xul:listbox class="output" flex="1" rows="5" style="-moz-user-focus:ignore">
+        </xul:listbox>
+        <xul:hbox flex="1">
+          <xul:textbox class="input" flex="1">
+            <xul:label value="&gt;&gt;&gt;"/>
+          </xul:textbox>
+        </xul:hbox>
+      </xul:vbox>
+    </content>
+    <implementation>
+      <field name="history">
+        (function(){
+          var a = [];
+          a.current = null;
+          a.getCurrent = function(){
+            return a.current === null ? null : a[a.current];
+          };
+          a.getNext = function(){
+            if (!a.length || a.current === null) { return null; }
+            a.current = a.current > 0 ? a.current-1 : null;
+            return a.getCurrent();
+          };
+          a.getPrevious = function(){
+            if (!a.length || a.current == a.length-1) { return null; }
+            a.current = (a.current == a.length-1) ? null : (a.current === null ? 0 : a.current+1);
+            return a.getCurrent();
+          };
+          return a;
+        })()
+      </field>
+      <method name="getInputElement">
+        <body>return document.getAnonymousNodes(this)[0].childNodes[1].childNodes[0];</body>
+      </method>
+      <method name="getListboxElement">
+        <body>return document.getAnonymousNodes(this)[0].childNodes[0];</body>
+      </method>
+    </implementation>
+    <handlers>
+      <handler event="keypress" keycode="VK_RETURN">
+        <action>
+          var nodes = document.getAnonymousNodes(this);
+          var listbox = this.getListboxElement();
+          var input = this.getInputElement();
+          if (!input.value) return;
+          var error = false, result;
+          try {
+            result = eval(input.value);
+            result = typeof result.toString == 'function' ? result.toString() : result;
+          } catch (e) {
+            var error = true;
+            result = e;
+          }
+          var item = listbox.appendItem(result, 'humbaba');
+          item.setAttribute('class', error ? 'error' : 'result');
+          listbox.scrollToIndex(listbox.getIndexOfItem(item));
+          this.history.unshift(input.value);
+          input.value = '';
+          this.history.current = null;
+        </action>
+      </handler>
+      <handler event="keypress" keycode="VK_UP">
+        <action>
+          dump('BEFORE:'+this.history.current+', ');
+          var prev = this.history.getPrevious();
+          if (prev) this.getInputElement().value = prev;
+          dump('AFTER:'+this.history.current+'\n');
+        </action>
+      </handler>
+      <handler event="keypress" keycode="VK_DOWN">
+        <action>
+          dump('BEFORE:'+this.history.current+', ');
+          this.getInputElement().value = this.history.getNext() || '';
+          dump('AFTER:'+this.history.current+'\n');
+        </action>
+      </handler>
+    </handlers>
+  </binding>
+</bindings>
