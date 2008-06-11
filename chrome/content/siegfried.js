@@ -282,14 +282,14 @@ Siegfried = {
   },
   
   formatUpdateText: function(text){
-    return text.split(/(@[a-zA-Z1-9_-]+)/).reduce(function(els,s){
-      var m = s.match(/(@)([a-zA-Z1-9_-]+)/);
+    return text.split(/(@[a-zA-Z0-9_-]+)/).reduce(function(els,s){
+      var m = s.match(/(@)([a-zA-Z0-9_-]+)/);
       if (m){
         els.push($E('html:a', {href:'#'}, m[1]+m[2]));
       } else {
         els = els.concat(s.split(/((?:http:\/\/|www\.)[^ ]+)/).map(function(s){
           var m = s.match(/((?:http:\/\/|www\.)[^ ]+)/);
-          return m ? $E('html:a', {href:s}, s) : s;
+          return m ? $E('html:a', {href:s, class:'text-link'}, s) : s;
         }));
       }
       return els;

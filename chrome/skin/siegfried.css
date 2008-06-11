@@ -51,6 +51,11 @@
         #siegfried-tabs .updates .update .message a:focus {
           text-decoration: underline;
         }
+      
+      #siegfried-tabs .updates .update .text-link {
+        color: #f00;
+        display: inline;
+      }
 
 #update-message {
   height: 1em;
