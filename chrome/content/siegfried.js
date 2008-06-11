@@ -139,10 +139,10 @@ Siegfried = {
   },
   
   buildUpdatesFromJSON: function(json){
-    var that = this;
+    var that = this, odd = false;
     return json.map(function(update){
       var time = new Date(update.created_at);
-      return $E('richlistitem', {class:'update'},
+      return $E('richlistitem', {class:'update '+((odd = !odd) ? 'odd' : 'even')},
         $E('vbox', {pack:'center'},
           $E('image', {src:update.user.profile_image_url})
         ),
