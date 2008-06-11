@@ -20,7 +20,7 @@
 <!ENTITY menu.help.about.label "About">
 <!ENTITY menu.help.about.accesskey "a">
 
-<!ENTITY update.message.defaultValue "Whats up?">
+<!ENTITY update.message.defaultValue "What are you doing?">
 <!ENTITY update.button.label "Say it">
 
 <!ENTITY preferences.username.label "Username:">
