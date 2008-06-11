@@ -57,9 +57,12 @@
         display: inline;
       }
 
-#update-message {
-  height: 1em;
+#update-box {
+  padding-top: 0.25em;
 }
+
+  #update-message {
+  }
 
 #statusbar {
 

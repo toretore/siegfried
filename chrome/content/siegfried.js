@@ -166,15 +166,17 @@ Siegfried = {
         method: 'post',
         data: 'status='+$('update-message').value,
         onLoading: function(){
-          that.updateStatusbar('Sending update...');
+          $('cmd_siegfried_send_update').setAttribute('disabled', 'true');
         },
         onSuccess: function(){
-          that.updateStatusbar('');
           $('update-message').value = '';
           that.reloadUpdates();
         },
         onFailure: function(){
           alert('FAIL');
+        },
+        onComplete: function(){
+          $('cmd_siegfried_send_update').removeAttribute('disabled');
         },
         onException: function(req, e){
           alert('FAIL: '+e);
@@ -218,6 +220,7 @@ Siegfried = {
       onSuccess: this.K,
       onFailure: this.K,
       onLoading: this.K,
+      onComplete: this.K,
       onException: this.K,
       method: 'get',
       asynchronous: true,
@@ -251,6 +254,7 @@ Siegfried = {
               if (options.evalJSON) req.responseJSON = eval(req.responseText);
             } catch (e) { throw('JSON Error: '+e); }
             options['on'+(req.status == 200 ? 'Success' : 'Failure')](req);
+            options.onComplete(req);
           } catch (e) { options.onException(req, e); }
           break;
       }
