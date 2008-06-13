@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<?xml-stylesheet href="chrome://siegfried/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://siegfried/skin/black.css" type="text/css"?>
 <!DOCTYPE window SYSTEM "chrome://siegfried/locale/">
 
 <window
@@ -9,7 +9,8 @@
     onload="Siegfried.init()"
     onunload="Siegfried.destruct()"
     width="400" height="500"
-    persist="width height"
+    persist="width height screenX screenY"
+    hidechrome="true"
     xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
   <script src="chrome://siegfried/content/siegfried.js"/>
@@ -36,7 +37,7 @@
 
   <toolbox>
     <menubar id="siegfried-menubar">
-      <menu id="file-menu" label="&menu.file.label;" accesskey="&menu.file.accesskey;">
+      <menu id="file-menu" label="&menu.file.label;" accesskey="&menu.file.accesskey;" menuactive="true">
         <menupopup id="file-popup">
           <menuitem label="&menu.file.close.label;" accesskey="&menu.file.close.accesskey;" key="close_cmd" command="cmd_siegfried_close"/>
           <menuseparator/>
@@ -59,11 +60,17 @@
           <menuitem label="Venkman" command="cmd_siegfried_start_venkman"/>
         </menupopup>
       </menu>
+      <titlebar id="siegfried-titlebar"/>
+      <hbox id="siegfried-titlebar-buttons">
+        <button id="siegfried-minimize-button" class="titlebar-button" label="-" oncommand="window.minimize()"/>
+        <button id="siegfried-maximize-button" class="titlebar-button" label="^" oncommand="window.windowState == 1 ? window.restore() : window.maximize()"/>
+        <button id="siegfried-close-button" class="titlebar-button" label="x" command="cmd_siegfried_close"/>
+      </hbox>
     </menubar>
   </toolbox>
 
 
-  <tabbox id="siegfried-tabs" flex="1">
+  <tabbox id="siegfried-tabbox" flex="1">
     <hbox>
       <tabs id="siegfried-tabs">
         <tab id="private-updates-tab" label="&updates.privateTab.label;"/>
@@ -71,7 +78,7 @@
         <tab id="preferences-tab" label="Preferences"/>
       </tabs>
       <spacer flex="1"/>
-      <toolbarbutton label="Reload" tooltiptext="&updates.reloadButton.tooltipText;" command="cmd_siegfried_reload_current"/>
+      <toolbarbutton class="reload-button" label="Reload" tooltiptext="&updates.reloadButton.tooltipText;" command="cmd_siegfried_reload_current"/>
     </hbox>
     <tabpanels flex="1" id="siegfried-tabpanels">
       <tabpanel id="private-updates-tabpanel" name="private">
@@ -114,6 +121,10 @@
       onblur="if (!this.value) { this.changed=false;this.value=this.savedValue;} else {this.changed=true;}"
       key="send_update_cmd"/>
     <button label="&update.button.label;" id="update-button" command="cmd_siegfried_send_update"/>
+    <resizer dir="bottomright" id="siegfried-resizer-bottomright-1"/>
+  </hbox>
+  <hbox id="siegfried-resizer-bottomright-2-box">
+    <resizer dir="bottomright" id="siegfried-resizer-bottomright-2"/>
   </hbox>
 
 </window>

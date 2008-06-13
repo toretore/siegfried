@@ -1,58 +1,62 @@
 @import url(chrome://global/skin/);
 
-#siegfried-tabs, #siegfried-tabs tabpanels, #siegfried-tabs tabpanel {
+#siegfried-titlebar, #siegfried-titlebar-buttons {
+  display: none;
+}
+
+#siegfried-tabbox, #siegfried-tabbox tabpanels, #siegfried-tabbox tabpanel {
   padding: 0;
   margin: 0;
 }
 
-#siegfried-tabs {
+#siegfried-tabbox {
   margin-top: 0.25em;
 }
 
-#siegfried-tabs .updates {
+#siegfried-tabbox .updates {
   background: #fff;
   border-bottom: 1px inset;
   font-size: 80%;
 }
 
-  #siegfried-tabs .updates .update {
+  #siegfried-tabbox .updates .update {
     padding: 0.5em 0.25em;
     border-bottom: 1px dotted #eee;
   }
 
-    #siegfried-tabs .updates .update .updating {/* heh */
+    #siegfried-tabbox .updates .update .updating {/* heh */
       padding: 1em;
       text-align: center;
     }
 
-    #siegfried-tabs .updates .update image {
+    #siegfried-tabbox .updates .update image {
       height: 50px;
       width: 50px;
     }
 
-    #siegfried-tabs .updates .update .username {
+    #siegfried-tabbox .updates .update .username {
       font-size: 120%;
       font-weight: bold;
     }
 
-    #siegfried-tabs .updates .update .time {
+    #siegfried-tabbox .updates .update .time {
       font-size: 80%;
       color: #999;
     }
 
-    #siegfried-tabs .updates .update .message {
+    #siegfried-tabbox .updates .update .message {
     }
 
-      #siegfried-tabs .updates .update .message a {
+      #siegfried-tabbox .updates .update .message a {
         color: #339;
       }
 
-        #siegfried-tabs .updates .update .message a:hover,
-        #siegfried-tabs .updates .update .message a:focus {
+        #siegfried-tabbox .updates .update .message a:hover,
+        #siegfried-tabbox .updates .update .message a:focus {
           text-decoration: underline;
         }
       
-      #siegfried-tabs .updates .update .text-link {
+      #siegfried-tabbox .updates .update .text-link {
         color: #f00;
         display: inline;
       }

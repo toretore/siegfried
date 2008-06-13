@@ -1,0 +1,263 @@
+@import url(chrome://global/skin/);
+/*@import url(chrome://siegfried/skin/);*/
+
+
+window, window * {
+  -moz-appearance: none !important;
+}
+
+window {
+  background: #222;
+  border: 1px outset #222;
+}
+
+#siegfried-titlebar {
+  -moz-box-flex: 1;
+}
+
+#siegfried-titlebar-buttons {
+  -moz-box-align: center;
+}
+
+  .titlebar-button {
+    background: transparent;
+    border: none;
+    background: #444;
+    color: #999;
+    margin: 0 0.25em;
+    padding: 0;
+    min-width: 2em;
+    min-height: 1em;
+  }
+
+    .titlebar-button:hover, .titlebar-button:active {
+      background: #555;
+      color: #ccc;
+    }
+
+#siegfried-menubar {
+  background: #333;
+  border-bottom: 1px solid #444;
+  font-size: 80%;
+}
+
+  #siegfried-menubar * {
+    color: #999;
+  }
+
+  #siegfried-menubar menu {
+    padding: 0.2em 0.4em;
+  }
+
+    #siegfried-menubar menu:hover,
+    #siegfried-menubar menu[open] {
+      background: #555;
+    }
+
+      #siegfried-menubar menu:hover label,
+      #siegfried-menubar menu[open] label {
+      color: #fff;
+      }
+
+    #siegfried-menubar menupopup {
+      background: #555;
+      border: 1px outset #555;
+    }
+
+    #siegfried-menubar menupopup menuseparator {
+      border: none;
+      border-top: 1px solid #666;
+    }
+
+    #siegfried-menubar menupopup menuitem {
+      padding: 0.25em;
+      color: #ccc;
+    }
+
+      #siegfried-menubar menupopup menuitem:hover,
+      #siegfried-menubar menupopup menuitem:active {
+        background: #666;
+        color: #fff;
+      }
+
+#siegfried-tabbox {
+  padding: 0.5em;
+  margin-top: 0.5em;
+}
+
+#siegfried-tabs {
+  
+}
+
+  #siegfried-tabs tab {
+    background: #444;
+    color: #ccc;
+    -moz-border-radius: 0;
+    border: none;
+    margin-right: 2px;
+  }
+
+    #siegfried-tabs tab:hover, #siegfried-tabs tab:focus {
+      border-top-color: #f00;
+    }
+
+  #siegfried-tabbox .reload-button {
+    color: #ccc;
+    background: #333;
+    border: none;
+  }
+
+#siegfried-tabpanels {
+  background: #333;
+  border: none;
+  padding: 0;
+}
+
+  #siegfried-tabpanels tabpanel {
+  }
+
+  #siegfried-tabpanels .updates {
+    background: transparent;
+  }
+
+    #siegfried-tabpanels .updates .update {
+      border: none;
+      background: #444;
+      color: #ddd;
+      border-top: 1px solid transparent;
+      border-bottom: 1px solid transparent;
+      font-size: 80%;
+      padding: 0.5em;
+    }
+
+      #siegfried-tabpanels .updates .update .username {
+        font-size: 120%;
+        font-weight: bold;
+      }
+
+      #siegfried-tabpanels .updates .update .time {
+        font-size: 80%;
+        color: #999;
+      }
+
+      #siegfried-tabpanels .updates .update image {
+        opacity: 0.75;
+        margin-right: 0.25em;
+      }
+
+      #siegfried-tabpanels .updates .update a {
+        color: #ccf;
+      }
+    
+    #siegfried-tabpanels .updates .update.odd {
+      background: #555;
+    }
+  
+    #siegfried-tabpanels .updates .update[selected="true"] {
+      background: #222;
+      border-color: #448;
+      color: #fff;
+    }
+    
+      #siegfried-tabpanels .updates .update[selected="true"] image {
+        opacity: 1.0;
+      }
+    
+      #siegfried-tabpanels .updates .update[selected="true"] a {
+        text-decoration: underline;
+        color: #44b;
+      }
+
+      #siegfried-tabpanels .updates .loading {
+        margin: 0;
+        padding: 0;
+        -moz-box-flex: 1;
+        -moz-box-pack: center;
+        -moz-box-align: center;
+      }
+
+        #siegfried-tabpanels .updates .loading label {
+          margin: 0;
+          padding: 1em;
+          background: #666;
+          color: #ddd;
+          font-weight: bold;
+        }
+    
+    #siegfried-tabpanels .updates scrollbar {
+      background: transparent;
+    }
+
+      #siegfried-tabpanels .updates scrollbar scrollbarbutton {
+        background-color: #666;
+        background-position: center center;
+        border: none;
+      }
+
+      #siegfried-tabpanels .updates scrollbar[orient="vertical"] scrollbarbutton {
+        margin: 0 1px;
+      }
+
+      #siegfried-tabpanels .updates scrollbar[orient="horizontal"] scrollbarbutton {
+        margin: 1px 0;
+      }
+      
+        #siegfried-tabpanels .updates scrollbar scrollbarbutton:hover,
+        #siegfried-tabpanels .updates scrollbar scrollbarbutton:focus {
+          background-color: #777;
+        }
+
+      #siegfried-tabpanels .updates scrollbar slider {
+        background: transparent;
+        padding: 1px;
+      }
+
+        #siegfried-tabpanels .updates scrollbar slider thumb {
+          border: none;
+          background: #666;
+        }
+        
+        #siegfried-tabpanels .updates scrollbar slider thumb:hover,
+        #siegfried-tabpanels .updates scrollbar slider thumb:focus {
+          background-color: #777;
+        }
+
+      #siegfried-tabpanels .updates scrollcorner {
+        background: transparent;
+      }
+
+#update-box {
+  margin: 0.25em;
+  margin-right: 0;
+  margin-bottom: 0;
+}
+
+  #update-message {
+    border: none;
+    background: #555;
+    color: #eee;
+    margin: 0.2em;
+  }
+
+  #update-button {
+    border: none;
+    background: #000;
+    color: #999;
+    margin: 0.2em;
+  }
+
+  #siegfried-resizer-bottomright-1 {
+    width: 0.25em;
+    background: #202020;
+  }
+
+#siegfried-resizer-bottomright-2-box {
+  height: 0.25em;
+  -moz-box-pack: end;
+}
+
+  #siegfried-resizer-bottomright-2 {
+    width: 2em;
+    height: 0.25em;
+    background: #202020;
+  }

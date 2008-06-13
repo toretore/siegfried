@@ -30,6 +30,7 @@ window['$E'] = (function(){
 
     return el;
   };
+
 })();
 
 Siegfried = {
@@ -107,7 +108,7 @@ Siegfried = {
     return this.getUpdates(this.publicTimelineURL, this.merge({
       onLoading: function(){
         while (list.firstChild) { list.removeChild(list.firstChild); }
-        list.appendChild($E('description', {}, 'Loading...'));
+        list.appendChild($E('vbox', {class:'loading'}, $E('label', {value:'Loading...'})));
       },
       onSuccess: function(res){
         while (list.firstChild) { list.removeChild(list.firstChild); }
@@ -127,7 +128,7 @@ Siegfried = {
     return this.getUpdates(this.privateTimelineURL, this.merge({
       onLoading: function(){
         while (list.firstChild) { list.removeChild(list.firstChild); }
-        list.appendChild($E('description', {class:'loading', flex:'1'}, 'Loading...'));
+        list.appendChild($E('vbox', {class:'loading'}, $E('label', {value:'Loading...'})));
       },
       onSuccess: function(res){
         while (list.firstChild) { list.removeChild(list.firstChild); }
@@ -147,9 +148,9 @@ Siegfried = {
           $E('image', {src:update.user.profile_image_url})
         ),
         $E('vbox', {flex:'1'},
-          $E('hbox', {align:'center'},
+          $E('hbox', {align:'end'},
             $E('label', {class:'username', value:update.user.screen_name}),
-            $E('label', {class:'time', value:that.formatTime(time)})
+            $E('label', {class:'time', value:that.formatTime(time)+' from '+update.source.replace(/<[^>]*>/g, '')})
           ),
           $E.apply(window, ['description', {class:'message', flex:'1'}].concat(that.formatUpdateText(update.text)))
         )
