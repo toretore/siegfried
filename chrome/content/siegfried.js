@@ -48,6 +48,13 @@ Siegfried = {
            '@twitter.com/statuses/friends_timeline.json'
   },
   publicTimelineURL: 'http://twitter.com/statuses/public_timeline.json',
+  get repliesURL() {
+    if (!this.username || !this.password) { return null; }
+    //For some reason, I can't put the u/p in the url if already authenticated
+    return 'http://twitter.com/statuses/replies.json'
+    //return 'http://'+this.username+':'+this.password+
+    //       '@twitter.com/statuses/replies.json'
+  },
   get updateURL() {
     if (!this.username || !this.password) { return null; }
     return 'http://'+this.username+':'+this.password+
@@ -56,6 +63,7 @@ Siegfried = {
   
   get privateUpdatesList() { return $('private-updates'); },
   get publicUpdatesList() { return $('public-updates'); },
+  get repliesList() { return $('replies'); },
   
   get selectedTabName() {
     return $('siegfried-tabpanels').selectedPanel.getAttribute('name');
@@ -79,6 +87,7 @@ Siegfried = {
   reloadUpdates: function(){
     this.getPublicUpdates();
     this.getPrivateUpdates();
+    this.getReplies();
   },
   
   reloadCurrent: function(){
@@ -88,6 +97,9 @@ Siegfried = {
         break;
       case 'public':
         this.getPublicUpdates();
+        break;
+      case 'replies':
+        this.getReplies();
         break;
     }
   },
@@ -139,6 +151,26 @@ Siegfried = {
     }, opts || {}));
   },
   
+  getReplies: function(opts){
+    if (!this.repliesURL) { return null; }
+
+    var that = this;
+    var list = this.repliesList;
+
+    return this.getUpdates(this.repliesURL, this.merge({
+      onLoading: function(){
+        while (list.firstChild) { list.removeChild(list.firstChild); }
+        list.appendChild($E('vbox', {class:'loading'}, $E('label', {value:'Loading...'})));
+      },
+      onSuccess: function(res){
+        while (list.firstChild) { list.removeChild(list.firstChild); }
+        that.buildUpdatesFromJSON(res.responseJSON).forEach(function(item){
+          list.appendChild(item);
+        });
+      }
+    }, opts || {}));
+  },
+  
   buildUpdatesFromJSON: function(json){
     var that = this, odd = false;
     return json.map(function(update){
@@ -148,8 +180,8 @@ Siegfried = {
           $E('image', {src:update.user.profile_image_url})
         ),
         $E('vbox', {flex:'1'},
-          $E('hbox', {align:'end'},
-            $E('label', {class:'username', value:update.user.screen_name}),
+          $E('hbox', {align:'center'},
+            $E('label', {class:'username text-link', href:'http://www.twitter.com/'+update.user.screen_name, value:update.user.screen_name}),
             $E('label', {class:'time', value:that.formatTime(time)+' from '+update.source.replace(/<[^>]*>/g, '')})
           ),
           $E.apply(window, ['description', {class:'message', flex:'1'}].concat(that.formatUpdateText(update.text)))
@@ -290,7 +322,7 @@ Siegfried = {
     return text.split(/(@[a-zA-Z0-9_-]+)/).reduce(function(els,s){
       var m = s.match(/(@)([a-zA-Z0-9_-]+)/);
       if (m){
-        els.push($E('html:a', {href:'#'}, m[1]+m[2]));
+        els.push($E('html:a', {href:'http://twitter.com/'+m[2]}, m[1]+m[2]));
       } else {
         els = els.concat(s.split(/((?:http:\/\/|www\.)[^ ]+)/).map(function(s){
           var m = s.match(/((?:http:\/\/|www\.)[^ ]+)/);

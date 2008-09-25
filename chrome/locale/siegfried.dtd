@@ -31,4 +31,5 @@
 
 <!ENTITY updates.privateTab.label "Friends">
 <!ENTITY updates.publicTab.label "Everyone">
+<!ENTITY updates.repliesTab.label "Replies">
 <!ENTITY updates.reloadButton.tooltipText "Reload updates">

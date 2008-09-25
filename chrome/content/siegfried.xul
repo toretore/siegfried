@@ -71,18 +71,21 @@
 
 
   <tabbox id="siegfried-tabbox" flex="1">
-    <hbox>
+    <hbox id="siegfried-tabs-box">
       <tabs id="siegfried-tabs">
         <tab id="private-updates-tab" label="&updates.privateTab.label;"/>
+        <tab id="replies-tab" label="&updates.repliesTab.label;"/>
         <tab id="public-updates-tab" label="&updates.publicTab.label;"/>
         <tab id="preferences-tab" label="Preferences"/>
       </tabs>
-      <spacer flex="1"/>
       <toolbarbutton class="reload-button" label="Reload" tooltiptext="&updates.reloadButton.tooltipText;" command="cmd_siegfried_reload_current"/>
     </hbox>
     <tabpanels flex="1" id="siegfried-tabpanels">
       <tabpanel id="private-updates-tabpanel" name="private">
         <richlistbox class="updates" id="private-updates" flex="1" rows="5"/>
+      </tabpanel>
+      <tabpanel id="replies-tabpanel" name="replies">
+        <richlistbox class="updates" id="replies" flex="1" rows="5"/>
       </tabpanel>
       <tabpanel id="public-updates-tabpanel" name="public">
         <richlistbox class="updates" id="public-updates" flex="1" rows="5"/>

@@ -85,31 +85,63 @@ window {
   margin-top: 0.5em;
 }
 
-#siegfried-tabs {
-  
+#siegfried-tabs-box {
+  -moz-box-align: end;
 }
 
-  #siegfried-tabs tab {
-    background: #444;
-    color: #ccc;
-    -moz-border-radius: 0;
+#siegfried-tabs {
+  -moz-box-flex: 1;
+}
+
+  #siegfried-tabs > spacer {
     border: none;
+  }
+
+  #siegfried-tabs tab {
+    -moz-border-top-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-left-colors: none;
+    background: #303030;
+    color: #666;
+    border: none;
+    border-top: 1px solid #444;
     margin-right: 2px;
+    padding: 0.25em;
   }
 
     #siegfried-tabs tab:hover, #siegfried-tabs tab:focus {
-      border-top-color: #f00;
+      border-top-color: #555;
+    }
+
+    #siegfried-tabs tab[selected="true"] {
+      background-color: #444;
+      color: #ccc;
+      border-color: #666;
+    }
+
+    #siegfried-tabs tab label {
+      margin: 0;
     }
 
   #siegfried-tabbox .reload-button {
-    color: #ccc;
-    background: #333;
+    color: #666;
+    background: transparent;
     border: none;
+    padding: 0;
+    font-size: 80%;
   }
+
+    #siegfried-tabbox .reload-button:hover,
+    #siegfried-tabbox .reload-button:focus {
+      text-decoration: underline;
+      color: #ccc;
+      cursor: pointer;
+    }
 
 #siegfried-tabpanels {
   background: #333;
   border: none;
+  border-top: 1px solid #444;
   padding: 0;
 }
 
@@ -133,6 +165,8 @@ window {
       #siegfried-tabpanels .updates .update .username {
         font-size: 120%;
         font-weight: bold;
+        color: inherit;
+        text-decoration: none;
       }
 
       #siegfried-tabpanels .updates .update .time {
@@ -141,7 +175,7 @@ window {
       }
 
       #siegfried-tabpanels .updates .update image {
-        opacity: 0.75;
+        opacity: 0.5;
         margin-right: 0.25em;
       }
 
@@ -158,6 +192,10 @@ window {
       border-color: #448;
       color: #fff;
     }
+    
+      #siegfried-tabpanels .updates .update[selected="true"] .username {
+        text-decoration: underline;
+      }
     
       #siegfried-tabpanels .updates .update[selected="true"] image {
         opacity: 1.0;
