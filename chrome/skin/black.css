@@ -277,6 +277,28 @@ window {
     margin: 0.2em;
   }
 
+  #update-message-character-counter {
+    margin: 0.2em;
+    color: #999;
+    font-weight: bold;
+    border: 1px solid #333;
+    padding: 0.25em;
+    min-width: 2em;
+    text-align: center;
+  }
+
+    #update-message-character-counter.warning {
+      border-color: #933;
+      background-color: #300;
+      color: #966;
+    }
+
+    #update-message-character-counter.overflow {
+      border-color: #c00;
+      background-color: #600;
+      color: #fff;
+    }
+
   #update-button {
     border: none;
     background: #000;

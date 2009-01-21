@@ -41,6 +41,10 @@ Siegfried = {
   set password(v) { $('twitter-password').value = v; },
   get updateFrequency() { return $('update-frequency').value; },
   set updateFrequency(v) { $('update-frequency').value = v; },
+  get message() { return $('update-message').value; },
+  set message(v) { $('update-message').value = v; },
+  get characterCounter() { return parseInt($('update-message-character-counter').value); },
+  set characterCounter(v) { $('update-message-character-counter').value = v; },
 
   get privateTimelineURL() {
     if (!this.username || !this.password) { return null; }
@@ -76,12 +80,31 @@ Siegfried = {
     if (!this.privateTimelineURL) { this.showPreferences(); }
     this.reloadUpdates();
     this.createReloader();
+    this.initCharacterCounter();
   },
   
   destruct: function(){
     with ($('twitter-username')) setAttribute('savedValue', value);
     with ($('twitter-password')) setAttribute('savedValue', value);
     with ($('update-frequency')) setAttribute('savedValue', value);
+  },
+  
+  initCharacterCounter: function(){
+    var that = this,
+        counter = $('update-message-character-counter');
+    var className = counter.className;
+    //className = className.replace(/\soverflow/, '');
+
+    this._characterCounterInterval = setInterval(function(){
+      that.characterCounter = 140 - that.message.length;
+      if (that.characterCounter <= 0) {
+        counter.className = className + ' overflow';
+      } else if (that.characterCounter < 15) {
+        counter.className = className + ' warning';
+      } else {
+        counter.className = className;
+      }
+    }, 100);
   },
 
   reloadUpdates: function(){
@@ -197,7 +220,7 @@ Siegfried = {
       this.request({
         url: this.updateURL,
         method: 'post',
-        data: 'status='+$('update-message').value,
+        data: 'status='+encodeURIComponent($('update-message').value),
         onLoading: function(){
           $('cmd_siegfried_send_update').setAttribute('disabled', 'true');
         },

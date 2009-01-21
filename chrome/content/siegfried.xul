@@ -123,6 +123,7 @@
       onfocus="if (!this.changed) {this.savedValue=this.value; this.value='';}"
       onblur="if (!this.value) { this.changed=false;this.value=this.savedValue;} else {this.changed=true;}"
       key="send_update_cmd"/>
+    <label id="update-message-character-counter" value="0"/>
     <button label="&update.button.label;" id="update-button" command="cmd_siegfried_send_update"/>
     <resizer dir="bottomright" id="siegfried-resizer-bottomright-1"/>
   </hbox>
