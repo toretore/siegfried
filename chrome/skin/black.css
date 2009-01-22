@@ -264,6 +264,28 @@ window {
         background: transparent;
       }
 
+#preferences row {
+  margin: 0.25em;
+}
+
+#preferences label {
+  color: #ccc;
+  font-size: 80%;
+  text-align: right;
+  -moz-box-align: center;
+}
+
+#preferences textbox {
+  border: none;
+  background: #666;
+  color: #eee;
+  padding: 0.2em;
+}
+
+#preferences #update-frequency {
+  width: 3em;
+}
+
 #update-box {
   margin: 0.25em;
   margin-right: 0;
@@ -275,6 +297,7 @@ window {
     background: #555;
     color: #eee;
     margin: 0.2em;
+    -moz-box-align: center;
   }
 
   #update-message-character-counter {
