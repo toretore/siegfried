@@ -25,7 +25,11 @@ window['$E'] = (function(){
 
     for each (var [k,v] in Iterator(attributes)) { el.setAttribute(k, v); }
     children.forEach(function(child){
-      el.appendChild(typeof child == 'string' ? document.createTextNode(child) : child);
+      if (typeof child == 'string') {
+        el.appendChild(document.createTextNode(child.replace(/&lt;/g, '<').replace(/&gt;/g, '>')));
+      } else {
+        el.appendChild(child);
+      }
     });
 
     return el;
